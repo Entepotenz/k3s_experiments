@@ -1,0 +1,6 @@
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
+- name: Uninstall k3s
+  ansible.builtin.command: k3s-uninstall.sh
+  when: "'k3s.service' in services"

@@ -1,0 +1,17 @@
+---
+- name: Create folder
+  ansible.builtin.file:
+    dest: /etc/rancher/k3s/
+    group: root
+    owner: root
+    recurse: true
+    state: directory
+    mode: u=rw,g=rw,o=r
+
+- name: Create config.yaml
+  ansible.builtin.copy:
+    content: "disable: traefik"
+    dest: /etc/rancher/k3s/config.yaml
+    group: root
+    owner: root
+    mode: u=rw,g=rw,o=r

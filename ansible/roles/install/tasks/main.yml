@@ -1,0 +1,9 @@
+---
+
+- name: Run k3s installation script
+  ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -s - server --cluster-init
+  register: output
+
+- ansible.builtin.debug: var=output.stdout_lines
+
+- ansible.builtin.debug: var=output.stderr_lines

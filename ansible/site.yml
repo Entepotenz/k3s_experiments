@@ -1,0 +1,8 @@
+---
+- name: Apply k3s configuration
+  hosts: all
+  become: true
+  roles:
+    - reset
+    - configuration
+    - install
