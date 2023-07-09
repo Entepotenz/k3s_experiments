@@ -1,8 +1,29 @@
 ---
-- name: Apply k3s configuration
+- name: Uninstall k3s everywhere
   hosts: all
   become: true
   roles:
     - reset
+
+- name: Install k3s on first master to setup control plane
+  hosts: master[0]
+  become: true
+  roles:
     - configuration
     - install
+
+- name: Install k3s on other masters and connect them to control plane
+  hosts: master[1:]
+  become: true
+  roles:
+    - configuration
+    - install-with-token
+
+- name: Apply pods
+  hosts: master[0]
+  become: true
+  roles:
+    - sample-service-first-pod
+    # remove pod with those commands:
+    # kubectl delete pod my-first-nginx
+    # kubectl delete service my-service

@@ -7,3 +7,16 @@
 - ansible.builtin.debug: var=output.stdout_lines
 
 - ansible.builtin.debug: var=output.stderr_lines
+
+- name: Read server_token from master
+  ansible.builtin.slurp:
+    path: "/var/lib/rancher/k3s/server/token"
+  register: server_token
+
+- name: Store Master server_token
+  ansible.builtin.set_fact:
+    token: "{{ server_token.content | b64decode | regex_replace('\n', '') }}"
+
+- name: Store k3s control plane URL
+  ansible.builtin.set_fact:
+    control_plane_url: "https://{{ ansible_hostname }}:6443"
