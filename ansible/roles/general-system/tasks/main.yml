@@ -1,0 +1,25 @@
+---
+
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Install curl package
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+  when: "item not in ansible_facts.packages"
+
+- name: Install vim
+  ansible.builtin.include_tasks: install-vim.yml
+
+- name: Install fail2ban
+  ansible.builtin.include_tasks: install-fail2ban.yml
+
+- name: Install SSH-Server
+  ansible.builtin.include_tasks: install-sshd.yml
+
+- name: Install Unattended-Upgrades Service
+  ansible.builtin.include_tasks: install-unattended-upgrades.yml

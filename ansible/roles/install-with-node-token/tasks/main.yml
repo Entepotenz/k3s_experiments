@@ -1,0 +1,18 @@
+---
+
+- name: Run k3s installation script
+  ansible.builtin.shell: curl -sfL https://get.k3s.io | K3S_URL={{ hostvars[groups['master'][0]]['control_plane_url'] | quote }} K3S_TOKEN={{ hostvars[groups['master'][0]]['node_token'] | quote }} sh -
+  register: output
+
+- ansible.builtin.debug: var=output.stdout_lines
+
+- ansible.builtin.debug: var=output.stderr_lines
+
+- name: Verify that all nodes actually joined
+  ansible.builtin.command:
+    cmd: k3s kubectl get nodes -l "node-role.kubernetes.io/node=true" -o=jsonpath="{.items[*].metadata.name}"
+  register: nodes
+  until: nodes.rc == 0 and (nodes.stdout.split() | length) == (groups['node'] | length)
+  retries: "{{ retry_count | default(20) }}"
+  delay: 10
+  changed_when: false

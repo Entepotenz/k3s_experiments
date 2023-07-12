@@ -9,6 +9,7 @@
   hosts: master[0]
   become: true
   roles:
+    - general-system
     - configuration
     - install
 
@@ -16,14 +17,21 @@
   hosts: master[1:]
   become: true
   roles:
-    - configuration
-    - install-with-token
+    - general-system
+    - install-with-server-token
 
-- name: Apply pods
-  hosts: master[0]
+- name: Add k3s nodes
+  hosts: node
   become: true
   roles:
-    - sample-service-first-pod
-    # remove pod with those commands:
-    # kubectl delete pod my-first-nginx
-    # kubectl delete service my-service
+    - general-system
+    - install-with-node-token
+
+# - name: Apply pods
+#   hosts: master[0]
+#   become: true
+#   roles:
+#     - sample-service-first-pod
+#     # remove pod with those commands:
+#     # kubectl delete pod my-first-nginx
+#     # kubectl delete service my-service

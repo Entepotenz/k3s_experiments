@@ -1,0 +1,25 @@
+---
+- name: Install Fail2ban
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - fail2ban
+  when: "item not in ansible_facts.packages"
+
+- name: Start fail2ban and enable auto restart
+  ansible.builtin.service:
+    name: fail2ban
+    state: started
+    enabled: true
+
+- name: Copy Fail2ban Configuration File
+  ansible.builtin.copy:
+    dest: /etc/fail2ban/jail.local
+    mode: u=rw,g=r,o=r
+    owner: root
+    group: root
+    content: |
+      [sshd]
+      enabled = true
+  notify: Restart fail2ban

@@ -1,0 +1,39 @@
+---
+- name: Install OpenSSH server
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - openssh-server
+  when: "item not in ansible_facts.packages"
+
+- name: Enable auto start of ssh server
+  ansible.builtin.service:
+    name: sshd
+    state: started
+    enabled: true
+
+- name: Configure values
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.key }}"
+    line: "{{ item.value }}"
+    validate: 'sshd -t -f %s'
+  with_items:
+    - { key: "^#?Protocol.+$", value: "Protocol 2" }
+    - { key: "^#?StrictModes.*$", value: "StrictModes yes" }
+    - { key: "^#?Port.+$", value: "Port {{ system.ssh_port }}" }
+    - { key: "^#?PermitRootLogin.*$", value: "PermitRootLogin prohibit-password" }
+    - { key: "^#?PubkeyAuthentication.*$", value: "PubkeyAuthentication yes" }
+    - {
+        key: "^#?Ciphers.*",
+        value: "Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr",
+      }
+    - {
+        key: "^#?HostKeyAlgorithms.*",
+        value: "HostKeyAlgorithms ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,rsa-sha2-512,rsa-sha2-256",
+      }
+    - {
+        key: "^#?KexAlgorithms.*",
+        value: "KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521",
+      }

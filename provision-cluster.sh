@@ -13,4 +13,5 @@ ansible-galaxy collection install -r "$SCRIPTPATH/ansible/requirements.yml"
 
 ansible-playbook \
     "$SCRIPTPATH/ansible/site.yml" \
-    -i "$SCRIPTPATH/ansible/inventory/my-cluster/hosts.ini"
+    --inventory "$SCRIPTPATH/ansible/inventory/my-cluster/hosts.ini" \
+    --inventory "$SCRIPTPATH/ansible/inventory/my-cluster/variables.yml"
