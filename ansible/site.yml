@@ -65,3 +65,16 @@
 #     # helm install traefik traefik/traefik
 #     # helm upgrade traefik traefik/traefik
 #     # kubectl delete -f ~/wordpress.yml
+
+# - name: Apply Fourth pod - part4
+#   hosts: master[0]
+#   become: true
+#   roles:
+#     - 04-sample-service-wordpress
+#     # setup helm
+#     # helm ls
+#     # helm repo add traefik https://traefik.github.io/charts
+#     # helm repo update
+#     # helm install traefik traefik/traefik
+#     # helm upgrade traefik traefik/traefik
+#     # kubectl delete -f ~/wordpress.yml

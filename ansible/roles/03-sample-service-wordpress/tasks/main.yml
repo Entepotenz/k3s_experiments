@@ -7,4 +7,4 @@
     mode: u=rw,g=r,o=
 
 - name: Deploy pod
-  ansible.builtin.shell: kubectl -f ~/wordpress.yml apply
+  ansible.builtin.command: kubectl -f ~/wordpress.yml apply

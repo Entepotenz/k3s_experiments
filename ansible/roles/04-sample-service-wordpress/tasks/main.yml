@@ -1,0 +1,19 @@
+
+# - name: Install traefik
+#   ansible.builtin.shell: source ~/.bashrc && helm install traefik traefik/traefik
+#   args:
+#     executable: /bin/bash
+
+- name: Copy <manifests>.yml
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "~/"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=
+  with_fileglob:
+    - "{{ role_path }}/files/*.yml"
+
+- name: Deploy pod
+  ansible.builtin.shell: "kubectl -f ~/$(basename {{ item }}) apply"
+  loop: "{{ lookup('fileglob', '{{ role_path }}/files/*.yml', wantlist=True) | sort }}"

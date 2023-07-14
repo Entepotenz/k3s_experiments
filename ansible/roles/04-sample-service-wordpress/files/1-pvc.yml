@@ -1,0 +1,14 @@
+# Der PVC für den Speicherplatz der Datenbank. Bestellt werden 4 GByte.
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-wp-db
+  namespace: backend
+spec:
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi

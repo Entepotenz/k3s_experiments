@@ -6,7 +6,7 @@
     dest: ~/get_helm.sh
     mode: u=rwx,g=,o=
 
-- name: install docker from script
+- name: Install docker from script
   ansible.builtin.command: sh ~/get_helm.sh
   register: output
 
