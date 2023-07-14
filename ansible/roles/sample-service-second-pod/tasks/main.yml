@@ -1,0 +1,10 @@
+- name: Copy second-pod.yml
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/second-pod.yml"
+    dest: "~/second-pod.yml"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=
+
+- name: Deploy pod
+  ansible.builtin.shell: kubectl -f ~/second-pod.yml apply

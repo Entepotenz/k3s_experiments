@@ -28,11 +28,26 @@
     - general-system
     - install-with-node-token
 
-# - name: Apply pods
+# - name: Apply First pod - part1
 #   hosts: master[0]
 #   become: true
 #   roles:
 #     - sample-service-first-pod
 #     # remove pod with those commands:
 #     # kubectl delete pod my-first-nginx
+#     # kubectl delete service my-service
+
+# - name: Apply Second pod - part2
+#   hosts: master[0]
+#   become: true
+#   roles:
+#     - sample-service-second-pod
+#     # show where the pod is running:
+#     # kubectl get pods -o wide
+#     # test loadbalancer by doing curl to the nodes
+#     # curl XXXX:30000
+#     # image austauschen und damit rolling update test ("containous/whoami:latest" durch "nginx:latest" ersetzen und vice versa):
+#     # kubectl get pods -w
+#     # remove pod with those commands:
+#     # kubectl delete deployment my-first-nginx-deployment
 #     # kubectl delete service my-service
