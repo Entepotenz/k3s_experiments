@@ -8,6 +8,8 @@
 
 - name: Install docker from script
   ansible.builtin.command: sh ~/get_helm.sh
+  args:
+    creates: /usr/local/bin/helm
   register: output
 
 - ansible.builtin.debug: var=output.stdout_lines
