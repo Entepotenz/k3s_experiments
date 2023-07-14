@@ -1,0 +1,15 @@
+---
+
+- name: Download get_helm.sh
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    dest: ~/get_helm.sh
+    mode: u=rwx,g=,o=
+
+- name: install docker from script
+  ansible.builtin.command: sh ~/get_helm.sh
+  register: output
+
+- ansible.builtin.debug: var=output.stdout_lines
+
+- ansible.builtin.debug: var=output.stderr_lines

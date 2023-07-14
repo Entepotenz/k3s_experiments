@@ -12,6 +12,7 @@
     - general-system
     - configuration
     - install
+    - install-helm
 
 - name: Install k3s on other masters and connect them to control plane
   hosts: master[1:]
@@ -32,7 +33,7 @@
 #   hosts: master[0]
 #   become: true
 #   roles:
-#     - sample-service-first-pod
+#     - 01-sample-service
 #     # remove pod with those commands:
 #     # kubectl delete pod my-first-nginx
 #     # kubectl delete service my-service
@@ -41,7 +42,7 @@
 #   hosts: master[0]
 #   become: true
 #   roles:
-#     - sample-service-second-pod
+#     - 02-sample-service
 #     # show where the pod is running:
 #     # kubectl get pods -o wide
 #     # test loadbalancer by doing curl to the nodes
@@ -51,3 +52,15 @@
 #     # remove pod with those commands:
 #     # kubectl delete deployment my-first-nginx-deployment
 #     # kubectl delete service my-service
+
+# - name: Apply Third pod - part3
+#   hosts: master[0]
+#   become: true
+#   roles:
+#     - 03-sample-service-wordpress
+#     # setup helm
+#     # helm ls
+#     # helm repo add traefik https://traefik.github.io/charts
+#     # helm repo update
+#     # helm install traefik traefik/traefik
+#     # helm upgrade traefik traefik/traefik

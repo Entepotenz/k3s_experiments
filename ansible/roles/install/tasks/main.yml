@@ -8,6 +8,14 @@
 
 - ansible.builtin.debug: var=output.stderr_lines
 
+- name: Adding the path in the bashrc files
+  ansible.builtin.lineinfile:
+    dest: ~/.bashrc
+    line: 'export KUBECONFIG=/etc/rancher/k3s/k3s.yaml'
+    insertafter: 'EOF'
+    regexp: 'export KUBECONFIG=.+'
+    state: present
+
 - name: Wait for server_token
   ansible.builtin.wait_for:
     path: "/var/lib/rancher/k3s/server/token"

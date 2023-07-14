@@ -1,4 +1,4 @@
-- name: Copy second-pod.yml
+- name: Copy <manifest>.yml
   ansible.builtin.copy:
     src: "{{ role_path }}/files/second-pod.yml"
     dest: "~/second-pod.yml"
