@@ -18,6 +18,7 @@
   become: true
   roles:
     - general-system
+    - configuration
     - install-with-server-token
 
 - name: Add k3s nodes
