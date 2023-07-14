@@ -4,3 +4,7 @@
 - name: Uninstall k3s
   ansible.builtin.command: k3s-uninstall.sh
   when: "'k3s.service' in services"
+
+- name: Uninstall k3s-agent
+  ansible.builtin.command: k3s-agent-uninstall.sh
+  when: "'k3s-agent.service' in services"

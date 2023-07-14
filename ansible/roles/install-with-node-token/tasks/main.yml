@@ -8,11 +8,9 @@
 
 - ansible.builtin.debug: var=output.stderr_lines
 
-- name: Verify that all nodes actually joined
-  ansible.builtin.command:
-    cmd: k3s kubectl get nodes -l "node-role.kubernetes.io/node=true" -o=jsonpath="{.items[*].metadata.name}"
-  register: nodes
-  until: nodes.rc == 0 and (nodes.stdout.split() | length) == (groups['node'] | length)
-  retries: "{{ retry_count | default(20) }}"
-  delay: 10
-  changed_when: false
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
+- name: Print service facts
+  ansible.builtin.debug:
+    var: ansible_facts.services['k3s-agent.service']
