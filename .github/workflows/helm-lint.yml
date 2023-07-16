@@ -1,0 +1,28 @@
+---
+
+name: helm-lint
+
+on:
+  pull_request:
+    branches: [ master, main ]
+  push:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    name: Helm Lint # Naming the build is important to use it as a status check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # needed for progressive mode to work
+      - name: Install helm-lint
+        run: |
+          apt-get install helm
+      - name: Run helm-lint
+        run: helm lint apps
+      - name: Run helm-lint
+        run: |
+          for directory in charts/*/ ; do
+            helm lint "$directory"
+          done
