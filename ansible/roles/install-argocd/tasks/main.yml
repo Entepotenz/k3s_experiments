@@ -1,0 +1,53 @@
+---
+
+- name: Copy <manifests>.yml
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "~/"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=
+  with_fileglob:
+    - "{{ role_path }}/files/*.yml"
+
+- name: Deploy pod
+  ansible.builtin.shell: "kubectl -f ~/0-namespaces.yml apply"
+
+- name: Check if ArgoCD is already running
+  ansible.builtin.shell: source ~/.bashrc && helm ls
+  args:
+    executable: /bin/bash
+  register: helm_ls
+
+- name: Add helm repo for ArgoCD
+  ansible.builtin.shell: source ~/.bashrc && helm repo add argo https://argoproj.github.io/argo-helm
+  args:
+    executable: /bin/bash
+  when: helm_ls.stdout.find('argocd') == -1
+
+- name: Update helm repo
+  ansible.builtin.shell: source ~/.bashrc && helm repo update
+  args:
+    executable: /bin/bash
+  when: helm_ls.stdout.find('argocd') == -1
+
+- name: Install ArgoCD
+  ansible.builtin.shell: source ~/.bashrc && helm install argocd argo/argo-cd -n argocd
+  args:
+    executable: /bin/bash
+  when: helm_ls.stdout.find('argocd') == -1
+
+# Port forwarding:
+# kubectl port-forward service/argocd-server -n argocd 8080:443
+# Get admin password:
+# kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+- name: Deploy pod
+  ansible.builtin.shell: "kubectl -f ~/1-application.yml apply"
+
+- name: Remove <manifests>.yml
+  ansible.builtin.file:
+    path: "{{ item | basename }}"
+    state: absent
+  with_fileglob:
+    - "{{ role_path }}/files/*.yml"
