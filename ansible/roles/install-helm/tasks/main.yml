@@ -12,6 +12,10 @@
     creates: /usr/local/bin/helm
   register: output
 
-- ansible.builtin.debug: var=output.stdout_lines
+- name: Print stdout
+  ansible.builtin.debug:
+    var: output.stdout_lines
 
-- ansible.builtin.debug: var=output.stderr_lines
+- name: Print stdout
+  ansible.builtin.debug:
+    var: output.stderr_lines

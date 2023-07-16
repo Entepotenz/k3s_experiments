@@ -4,9 +4,13 @@
   ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -s - server --cluster-init
   register: output
 
-- ansible.builtin.debug: var=output.stdout_lines
+- name: Print stdout
+  ansible.builtin.debug:
+    var: output.stdout_lines
 
-- ansible.builtin.debug: var=output.stderr_lines
+- name: Print stdout
+  ansible.builtin.debug:
+    var: output.stderr_lines
 
 - name: Adding the path in the bashrc files
   ansible.builtin.lineinfile:
