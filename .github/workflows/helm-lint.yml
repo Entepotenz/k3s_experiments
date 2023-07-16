@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0 # needed for progressive mode to work
       - name: Install helm-lint
         run: |
-          apt-get install helm
+          sudo apt-get install helm
       - name: Run helm-lint
         run: helm lint apps
       - name: Run helm-lint
