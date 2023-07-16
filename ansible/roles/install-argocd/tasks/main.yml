@@ -32,7 +32,7 @@
   when: helm_ls.stdout.find('argocd') == -1
 
 - name: Install ArgoCD
-  ansible.builtin.shell: source ~/.bashrc && helm install argocd argo/argo-cd -n argocd
+  ansible.builtin.shell: source ~/.bashrc && helm install argo-cd argo/argo-cd -n argocd
   args:
     executable: /bin/bash
   when: helm_ls.stdout.find('argocd') == -1
