@@ -78,3 +78,23 @@
 #     # helm install traefik traefik/traefik
 #     # helm upgrade traefik traefik/traefik
 #     # kubectl delete -f ~/wordpress.yml
+
+# - name: Apply Fifth pod - part5
+#   hosts: master[0]
+#   become: true
+#   roles:
+#     - 05-sample-service-wordpress-network-policies
+
+# - name: Apply sixth pod - part6
+#   hosts: master[0]
+#   become: true
+#   roles:
+#     - 06-sample-service-wordpress-longhorn
+#     # check if all systems are ready for longhorn
+#     # kubectl get pods -n longhorn-system
+#     # delete
+#     # kubectl -f ~/nginx-with-longhorn.yml delete
+#     # uninstall longhorn:
+#     # kubectl -n longhorn-system patch -p '{"value": "true"}' --type=merge lhs deleting-confirmation-flag
+#     # helm uninstall longhorn -n longhorn-system
+#     # kubectl delete namespace longhorn-system

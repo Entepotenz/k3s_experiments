@@ -1,0 +1,9 @@
+---
+- name: Install packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - open-iscsi
+    - nfs-common
+  when: "item not in ansible_facts.packages"

@@ -23,3 +23,6 @@
 
 - name: Install Unattended-Upgrades Service
   ansible.builtin.include_tasks: install-unattended-upgrades.yml
+
+- name: Install packages for kubernetes longhorn
+  ansible.builtin.include_tasks: install-packages-for-kubernetes-longhorn.yml

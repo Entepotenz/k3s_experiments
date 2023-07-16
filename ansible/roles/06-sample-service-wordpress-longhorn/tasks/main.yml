@@ -1,6 +1,6 @@
 ---
-# - name: Add helm traefik repo
-#   ansible.builtin.shell: source ~/.bashrc && helm repo add traefik https://traefik.github.io/charts
+# - name: Add helm longhorn repo
+#   ansible.builtin.shell: source ~/.bashrc && helm repo add longhorn https://charts.longhorn.io
 #   args:
 #     executable: /bin/bash
 
@@ -9,8 +9,13 @@
 #   args:
 #     executable: /bin/bash
 
-# - name: Install traefik
-#   ansible.builtin.shell: source ~/.bashrc && helm install traefik traefik/traefik
+# - name: Create kubernetes longhorn namespace
+#   ansible.builtin.shell: source ~/.bashrc && kubectl create namespace longhorn-system
+#   args:
+#     executable: /bin/bash
+
+# - name: Install longhorn
+#   ansible.builtin.shell: source ~/.bashrc && helm install longhorn longhorn/longhorn --namespace longhorn-system
 #   args:
 #     executable: /bin/bash
 
