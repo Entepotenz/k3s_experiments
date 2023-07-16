@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     name: in-cluster
-    namespace: default
+    namespace: argocd
   project: default
   source:
     path: charts/argo-cd
