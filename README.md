@@ -1,7 +1,6 @@
 # k3s_experiments
 
 ## TODO List
-- enable k3s autoupgrades
 - auto updates of helm charts
 - add strict NetworkPolicies
 - add strict Roles
