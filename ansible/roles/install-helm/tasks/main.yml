@@ -12,10 +12,15 @@
     creates: /usr/local/bin/helm
   register: output
 
+- name: Remove helm install file
+  ansible.builtin.file:
+    path: ~/get_helm.sh
+    state: absent
+
 - name: Print stdout
   ansible.builtin.debug:
     var: output.stdout_lines
 
-- name: Print stdout
+- name: Print stderr
   ansible.builtin.debug:
     var: output.stderr_lines

@@ -15,31 +15,31 @@
   changed_when: false
 
 - name: Check if ArgoCD is already running
-  ansible.builtin.shell: source ~/.bashrc && helm ls
-  args:
-    executable: /bin/bash
+  ansible.builtin.command: helm ls
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   register: helm_ls
   changed_when: false
 
 - name: Add helm repo for ArgoCD
-  ansible.builtin.shell: source ~/.bashrc && helm repo add argo https://argoproj.github.io/argo-helm
-  args:
-    executable: /bin/bash
+  ansible.builtin.command: helm repo add argo https://argoproj.github.io/argo-helm
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: helm_ls.stdout.find('argocd') == -1
   register: helm_command_output
   changed_when: "'skipping' not in helm_command_output.stdout"
 
 - name: Update helm repo
-  ansible.builtin.shell: source ~/.bashrc && helm repo update
-  args:
-    executable: /bin/bash
+  ansible.builtin.command: helm repo update
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: helm_ls.stdout.find('argocd') == -1
   changed_when: false
 
 - name: Install ArgoCD
-  ansible.builtin.shell: source ~/.bashrc && helm install argo-cd argo/argo-cd -n argocd
-  args:
-    executable: /bin/bash
+  ansible.builtin.command: helm install argo-cd argo/argo-cd -n argocd
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: helm_ls.stdout.find('argocd') == -1
   register: helm_command_output
   failed_when: "'INSTALLATION FAILED' in helm_command_output.stdout"

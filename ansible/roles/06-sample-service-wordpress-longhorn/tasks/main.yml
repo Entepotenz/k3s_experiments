@@ -1,23 +1,21 @@
 ---
 # - name: Add helm longhorn repo
-#   ansible.builtin.shell: source ~/.bashrc && helm repo add longhorn https://charts.longhorn.io
-#   args:
-#     executable: /bin/bash
+#   ansible.builtin.command: helm repo add longhorn https://charts.longhorn.io
+#   environment:
+#      KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
 # - name: Update helm repo
-#   ansible.builtin.shell: source ~/.bashrc && helm repo update
-#   args:
-#     executable: /bin/bash
+#   ansible.builtin.command: helm repo update
+#   environment:
+#      KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
 # - name: Create kubernetes longhorn namespace
-#   ansible.builtin.shell: source ~/.bashrc && kubectl create namespace longhorn-system
-#   args:
-#     executable: /bin/bash
+#   ansible.builtin.command: kubectl create namespace longhorn-system
 
 # - name: Install longhorn
-#   ansible.builtin.shell: source ~/.bashrc && helm install longhorn longhorn/longhorn --namespace longhorn-system
-#   args:
-#     executable: /bin/bash
+#   ansible.builtin.command: helm install longhorn longhorn/longhorn --namespace longhorn-system
+#   environment:
+#      KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
 - name: Copy <manifests>.yml
   ansible.builtin.copy:
