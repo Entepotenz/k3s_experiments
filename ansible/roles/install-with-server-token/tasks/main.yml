@@ -1,14 +1,19 @@
 ---
 
 - name: Run k3s installation script
-  ansible.builtin.shell: curl -sfL https://get.k3s.io | K3S_TOKEN={{ hostvars[groups['master'][0]]['server_token'] | quote }} sh -s - server --server {{ hostvars[groups['master'][0]]['control_plane_url'] | quote }}
+  ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -s - server
   register: output
+  environment:
+    K3S_TOKEN: "{{ hostvars[groups['master'][0]]['server_token'] | quote }}"
+    K3S_URL: "{{ hostvars[groups['master'][0]]['control_plane_url'] | quote }}"
+  tags:
+    - skip_ansible_lint
 
 - name: Print stdout
   ansible.builtin.debug:
     var: output.stdout_lines
 
-- name: Print stdout
+- name: Print stderr
   ansible.builtin.debug:
     var: output.stderr_lines
 
