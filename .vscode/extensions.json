@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "EditorConfig.EditorConfig",
+    "foxundermoon.shell-format",
+    "redhat.ansible",
+    "samuelcolvin.jinjahtml",
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-german"
+  ],
+  "unwantedRecommendations": []
+}
