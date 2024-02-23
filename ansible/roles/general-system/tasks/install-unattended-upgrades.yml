@@ -5,7 +5,7 @@
     state: present
   with_items:
     - unattended-upgrades
-  when: "item not in ansible_facts.packages"
+  when: item not in ansible_facts.packages
 
 - name: Start unattended-upgrades service
   ansible.builtin.service:
@@ -17,11 +17,11 @@
   ansible.builtin.replace:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
     # Remove comment from matching lines
-    regexp: '^(\s*)\/\/(\s*)(.*origin.*)(.*codename.*distro_codename.*)(.*-{{ item }}.*)$'
-    replace: '\1\2\3\4\5'
+    regexp: ^(\s*)\/\/(\s*)(.*origin.*)(.*codename.*distro_codename.*)(.*-{{ item }}.*)$
+    replace: \1\2\3\4\5
   loop:
-    - 'security'
-    - 'updates'
+    - security
+    - updates
   notify: Restart unattended-upgrades service
 
 - name: Enable automatic updates

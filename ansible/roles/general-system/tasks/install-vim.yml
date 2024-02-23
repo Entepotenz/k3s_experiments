@@ -5,12 +5,12 @@
     state: present
   with_items:
     - vim
-  when: "item not in ansible_facts.packages"
+  when: item not in ansible_facts.packages
 
 - name: Clone Vimrc Repository
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/amix/vimrc/master/vimrcs/basic.vim
-    dest: "$HOME/.vim_runtime"
+    dest: $HOME/.vim_runtime
     owner: "{{ item }}"
     group: "{{ item }}"
     mode: u=rw,g=r,o=r

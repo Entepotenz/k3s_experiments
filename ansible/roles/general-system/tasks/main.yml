@@ -1,5 +1,4 @@
 ---
-
 - name: Gather the package facts
   ansible.builtin.package_facts:
     manager: auto
@@ -10,7 +9,7 @@
     state: present
   with_items:
     - curl
-  when: "item not in ansible_facts.packages"
+  when: item not in ansible_facts.packages
 
 - name: Install vim
   ansible.builtin.include_tasks: install-vim.yml

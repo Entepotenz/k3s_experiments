@@ -1,9 +1,8 @@
 ---
-
 - name: Copy <manifests>.yml
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "~/"
+    dest: ~/
     owner: root
     group: root
     mode: u=rw,g=r,o=
@@ -11,7 +10,7 @@
     - "{{ role_path }}/files/*.yml"
 
 - name: Deploy pod
-  ansible.builtin.command: "kubectl -f ~/0-namespaces.yml apply"
+  ansible.builtin.command: kubectl -f ~/0-namespaces.yml apply
   changed_when: false
 
 - name: Check if ArgoCD is already running
@@ -51,7 +50,7 @@
 # kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 
 - name: Deploy pod
-  ansible.builtin.command: "kubectl -f ~/1-application.yml apply"
+  ansible.builtin.command: kubectl -f ~/1-application.yml apply
   changed_when: false
 
 - name: Remove <manifests>.yml

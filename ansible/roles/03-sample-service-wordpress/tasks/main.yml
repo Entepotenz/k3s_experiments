@@ -1,7 +1,8 @@
+---
 - name: Copy <manifest>.yml
   ansible.builtin.copy:
     src: "{{ role_path }}/files/wordpress.yml"
-    dest: "~/wordpress.yml"
+    dest: ~/wordpress.yml
     owner: root
     group: root
     mode: u=rw,g=r,o=

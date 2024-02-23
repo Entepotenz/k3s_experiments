@@ -29,7 +29,6 @@
   roles:
     - general-system
     - install-with-node-token
-
 # - name: Apply First pod - part1
 #   hosts: master[0]
 #   become: true

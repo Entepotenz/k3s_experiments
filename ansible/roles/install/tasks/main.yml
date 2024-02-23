@@ -1,5 +1,4 @@
 ---
-
 - name: Run k3s installation script
   ansible.builtin.shell: curl -sfL https://get.k3s.io | sh -s - server --cluster-init
   register: output
@@ -17,18 +16,18 @@
 - name: Adding the path in the bashrc files
   ansible.builtin.lineinfile:
     dest: ~/.bashrc
-    line: 'export KUBECONFIG=/etc/rancher/k3s/k3s.yaml'
-    insertafter: 'EOF'
-    regexp: 'export KUBECONFIG=.+'
+    line: export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+    insertafter: EOF
+    regexp: export KUBECONFIG=.+
     state: present
 
 - name: Wait for server_token
   ansible.builtin.wait_for:
-    path: "/var/lib/rancher/k3s/server/token"
+    path: /var/lib/rancher/k3s/server/token
 
 - name: Read server_token from master
   ansible.builtin.slurp:
-    path: "/var/lib/rancher/k3s/server/token"
+    path: /var/lib/rancher/k3s/server/token
   register: server_token
 
 - name: Store Master server_token
@@ -37,11 +36,11 @@
 
 - name: Wait for node_token
   ansible.builtin.wait_for:
-    path: "/var/lib/rancher/k3s/server/node-token"
+    path: /var/lib/rancher/k3s/server/node-token
 
 - name: Read node_token from master
   ansible.builtin.slurp:
-    path: "/var/lib/rancher/k3s/server/node-token"
+    path: /var/lib/rancher/k3s/server/node-token
   register: node_token
 
 - name: Store Master node_token
@@ -50,4 +49,4 @@
 
 - name: Store k3s control plane URL
   ansible.builtin.set_fact:
-    control_plane_url: "https://{{ ansible_hostname }}:6443"
+    control_plane_url: https://{{ ansible_hostname }}:6443
