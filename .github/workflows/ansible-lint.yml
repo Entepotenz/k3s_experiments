@@ -1,24 +1,27 @@
 ---
-
 name: ansible-lint
 
 on:
   pull_request:
-    branches: [ master, main ]
+    branches: [master, main]
   push:
-    branches: [ master, main ]
+    branches: [master, main]
+  workflow_dispatch:
 
 jobs:
   build:
     name: Ansible Lint # Naming the build is important to use it as a status check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          fetch-depth: 0 # needed for progressive mode to work
+          python-version: "3"
+          cache: "pip" # caching pip dependencies
       - name: Install ansible-lint
-        run: |
-          python -m pip install --upgrade pip
-          pip install ansible-lint
+        run: pip install ansible-lint
+      - name: Install community packages
+        run: ansible-galaxy collection install -r "./ansible/requirements.yml"
+        shell: bash
       - name: Run ansible-lint
         run: ansible-lint ansible/site.yml
